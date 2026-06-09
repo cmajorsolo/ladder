@@ -3,10 +3,13 @@ This is the orchestrator for the agents. It runs the pipeline
 """
 from agents.scraper import run_scraper_agent
 from agents.analyst import run_analyst_agent
+from agents.gap_analyser import run_gap_analyser_agent
 
 state = {
     "search_query": "Senior AI Engineer UK",
     "scored_jds": [],
+    "approved_paths": [],
+    "gap_report_path": "",
 }
 
 def human_checkpoint(scored_jds: list[dict]) -> list[str]:
@@ -31,12 +34,21 @@ def human_checkpoint(scored_jds: list[dict]) -> list[str]:
     return approved_paths
 
 if __name__ == "__main__":
-    # Agent 1 - Scrapping jobs with search_query
+    ## Agent 1 - Scrapping jobs with search_query
     # run_scraper_agent(state["search_query"])
 
-    # Agent 2
-    scored_jds = run_analyst_agent()
-    state["scored_jds"] = scored_jds
+    ## Agent 2
+    # scored_jds = run_analyst_agent()
+    # state["scored_jds"] = scored_jds
 
-    # Human checkpoint
-    state["approved_paths"] = human_checkpoint(scored_jds)
+    # # Human checkpoint
+    # state["approved_paths"] = human_checkpoint(scored_jds)
+
+    # Agent 3 - Gap Analyser (hardcoded paths for isolated testing)
+    state["approved_paths"] = [
+        "data/JD/JD1_Sr._Forward_Deployed_AI_Engineer_(Remote_Eligible_in_the_UK)_Smartsheet.json",
+        "data/JD/JD2_Senior_AI_Engineer_TalentHub_Global_Ltd.json",
+        "data/JD/JD3_Senior_AI_Engineer_INSIGHT_INTERNATIONAL_UK_LTD.json",
+        "data/JD/JD4_Senior_ML_&_AI_Engineer_Beatport.json",
+    ]
+    run_gap_analyser_agent(state["approved_paths"])

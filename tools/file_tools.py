@@ -63,3 +63,34 @@ def save_scored_jds(scored_jds: list[dict]) -> str:
         json.dump(scored_jds, f, indent=2)
     logging.info(f"[save_scored_jds] saved to: {output_path}")
     return output_path
+
+def read_profile()->str:
+    """Read the candidate profile from my_profile.md."""
+    profile_path = os.path.join(os.path.dirname(__file__), "..", "data", "my_profile.md")
+    with open(profile_path, "r") as f:
+        return f.read()
+
+def write_gap_report(gaps: list[dict]) -> str:
+    """Write gap_report.md and gap_report.json from a list of gap dicts.
+    Each gap dict: {skill, frequency, priority, status}
+    Returns the path to gap_report.json.
+    """
+    data_dir = os.path.join(os.path.dirname(__file__), "..", "data")
+    data_dir = os.path.abspath(data_dir)
+
+    # Write JSON for Agent 4
+    json_path = os.path.join(data_dir, "gap_report.json")
+    with open(json_path, "w") as f:
+        json.dump(gaps, f, indent=2)
+
+    # Write Markdown for human review
+    md_path = os.path.join(data_dir, "gap_report.md")
+    with open(md_path, "w") as f:
+        f.write("# Gap Report\n\n")
+        f.write("| Skill | Frequency | Priority | Status |\n")
+        f.write("|---|---|---|---|\n")
+        for g in gaps:
+            f.write(f"| {g['skill']} | {g['frequency']} | {g['priority']} | {g['status']} |\n")
+
+    logging.info(f"[write_gap_report] saved to: {json_path}")
+    return json_path
