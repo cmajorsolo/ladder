@@ -41,3 +41,25 @@ def save_jd(jd:dict)->str:
         f.write(f"**URL:** {jd.get('url', '')}\n")    
 
     return md_path
+
+def read_jd(json_path:str)->dict:
+    '''Read a JD JSON file and return its contents.'''
+    with open(json_path, "r") as f:
+        return json.load(f)
+
+def list_jds()->list[dict]:
+    '''Return all JD JSON file paths in the JD folder'''
+    return [
+        os.path.join(DATA_DIR, f)
+        for f in os.listdir(DATA_DIR)
+        if f.endswith(".json")
+    ]
+
+def save_scored_jds(scored_jds: list[dict]) -> str:
+    """Save Agent 2's scored and ranked JD list to data/scored_jds.json."""
+    output_path = os.path.join(os.path.dirname(__file__), "..", "data", "scored_jds.json")
+    output_path = os.path.abspath(output_path)
+    with open(output_path, "w") as f:
+        json.dump(scored_jds, f, indent=2)
+    logging.info(f"[save_scored_jds] saved to: {output_path}")
+    return output_path
