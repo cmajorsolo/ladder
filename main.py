@@ -4,6 +4,7 @@ This is the orchestrator for the agents. It runs the pipeline
 from agents.scraper import run_scraper_agent
 from agents.analyst import run_analyst_agent
 from agents.gap_analyser import run_gap_analyser_agent
+from agents.study_updater import run_study_updater_agent
 
 state = {
     "search_query": "Senior AI Engineer UK",
@@ -52,3 +53,6 @@ if __name__ == "__main__":
         "data/JD/JD4_Senior_ML_&_AI_Engineer_Beatport.json",
     ]
     run_gap_analyser_agent(state["approved_paths"])
+
+    # Agent 4 - Study Updater
+    run_study_updater_agent()
