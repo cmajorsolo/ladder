@@ -9,7 +9,8 @@ import os
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data", "JD")
 
-def save_jd(jd:dict)->str:
+def save_jd(jd: dict) -> str:
+    """Save a structured job description to disk as both .md and .json. Returns the .md file path."""
     resolved = os.path.abspath(DATA_DIR)
     logging.info(f"[save_jd] saving to: {resolved}")
     os.makedirs(DATA_DIR, exist_ok=True)

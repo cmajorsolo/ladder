@@ -21,8 +21,7 @@ JOB_SITES = [
    
 
 def web_search(query: str, limit: int=5, days_ago: int=7) -> list[dict]:
-    # FirecrawlApp is a wrapper around the Firecrawl API that provides convenient methods for searching and scraping web content.
-    # It is like Google. It searches across the whole web and returns whatever pages rank for your query.
+    """Search for job listings matching the query. Returns a list of results with title, url, and snippet."""
     app = FirecrawlApp(api_key=os.getenv("FIRECRAWL_API_KEY"))
     since_date = (datetime.now() - timedelta(days=days_ago)).strftime("%Y-%m-%d")
     sites = " OR ".join([f'site:{site}' for site in JOB_SITES])                                                                                                                                                                                
@@ -38,6 +37,7 @@ def web_search(query: str, limit: int=5, days_ago: int=7) -> list[dict]:
     ]
 
 def scrape_page(url: str) -> str:
+    """Scrape the full job description text from a URL. Returns markdown content."""
     logging.info(f"Scraping page: {url}")
     app = FirecrawlApp(api_key=os.getenv("FIRECRAWL_API_KEY"))
     result = app.scrape(url=url, formats=["markdown"])

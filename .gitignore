@@ -1,2 +1,7 @@
 .env
+CLAUDE.md
 data/
+tools/__pycache__/
+agents/__pycache__/
+__pycache__/
+.vscode/    
