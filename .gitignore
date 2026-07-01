@@ -5,3 +5,9 @@ tools/__pycache__/
 agents/__pycache__/
 __pycache__/
 .vscode/    
+.venv
+layer/
+infra/cdk.out/
+infra/.python-version
+infra/cdk.json
+infra/output.json
